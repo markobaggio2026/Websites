@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naples Waterfront Listings | Marsha Warnike</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #E8DDD0; --sand-light: #F4EFE9; --sand-dark: #C9BAA8;
+    --gulf: #4A7C8E; --gulf-deep: #2E5A6B; --gulf-light: #7AAFC0; --gulf-pale: #D4E8EF;
+    --palm: #4A6741; --palm-light: #7A9976;
+    --white: #FDFAF7; --ink: #1C2B2E; --ink-mid: #3D5055; --ink-light: #6B8086;
+    --border: rgba(74,124,142,0.2); --shadow: 0 4px 32px rgba(28,43,46,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--sand-light); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+  header { position: relative; background: var(--ink); overflow: hidden; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .header-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 80% 60%, rgba(74,124,142,0.35) 0%, transparent 70%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(74,103,65,0.2) 0%, transparent 60%), linear-gradient(160deg, #1C2B2E 0%, #2E3F44 50%, #1C2B2E 100%); }
+  .wave-pattern { position: absolute; bottom: 0; left: 0; right: 0; height: 120px; opacity: 0.06; background-image: repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(74,124,142,1) 18px, rgba(74,124,142,1) 19px), repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(74,124,142,0.4) 80px, rgba(74,124,142,0.4) 81px); }
+  .header-content { position: relative; z-index: 2; padding: 60px 60px 50px; }
+  .realtor-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(74,124,142,0.2); border: 1px solid rgba(74,124,142,0.4); border-radius: 2px; padding: 6px 14px; margin-bottom: 24px; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gulf-light); }
+  .realtor-badge::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gulf-light); }
+  header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px,5vw,64px); font-weight: 300; color: var(--white); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 12px; }
+  header h1 em { font-style: italic; color: var(--gulf-light); }
+  header .subtitle { font-size: 14px; font-weight: 300; color: rgba(253,250,247,0.55); letter-spacing: 0.05em; margin-bottom: 40px; }
+  .header-stats { display: flex; gap: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; flex-wrap: wrap; }
+  .hstat-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--white); line-height: 1; }
+  .hstat-label { font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(253,250,247,0.4); margin-top: 4px; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; padding: 0 60px; height: 56px; box-shadow: 0 2px 16px rgba(28,43,46,0.06); }
+  .nav-tabs { display: flex; gap: 0; height: 100%; }
+  .nav-tab { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); background: none; border: none; border-bottom: 2px solid transparent; padding: 0 18px; cursor: pointer; height: 100%; transition: all 0.2s; }
+  .nav-tab:hover { color: var(--gulf); }
+  .nav-tab.active { color: var(--gulf-deep); border-bottom-color: var(--gulf); }
+  .nav-realtor { font-size: 12px; color: var(--ink-light); font-weight: 300; }
+  .nav-realtor strong { color: var(--gulf-deep); font-weight: 500; }
+
+  main { max-width: 1400px; margin: 0 auto; padding: 0 60px 80px; }
+  section { display: none; padding-top: 48px; }
+  section.active { display: block; }
+
+  .section-intro { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; gap: 20px; flex-wrap: wrap; }
+  .section-intro h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; color: var(--ink); line-height: 1.1; }
+  .section-intro h2 span { font-style: italic; color: var(--gulf); }
+  .section-intro p { font-size: 13px; color: var(--ink-light); font-weight: 300; max-width: 440px; text-align: right; }
+
+  .neighborhood-divider { display: flex; align-items: center; gap: 16px; margin: 40px 0 24px; }
+  .neighborhood-divider h3 { font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); white-space: nowrap; }
+  .neighborhood-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .prop-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+  .prop-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .prop-card.top-pick { border-color: var(--gulf); border-width: 2px; }
+
+  .card-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); position: relative; }
+  .card-badge { display: inline-block; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; margin-bottom: 10px; }
+  .badge-new { background: #E1F0E8; color: #3A6B42; }
+  .badge-recent { background: #D4E8EF; color: #2E5A6B; }
+  .badge-resale { background: #EDE8E3; color: #6B5A48; }
+  .badge-top { background: var(--gulf); color: var(--white); }
+  .card-address { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--ink); line-height: 1.2; margin-bottom: 3px; }
+  .card-neighborhood { font-size: 11px; color: var(--ink-light); font-weight: 300; letter-spacing: 0.04em; }
+  .card-price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--gulf-deep); margin-top: 14px; }
+  .top-pick-ribbon { position: absolute; top: 16px; right: 16px; background: var(--gulf); color: white; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+
+  .card-body { padding: 16px 20px; }
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin-bottom: 16px; }
+  .metric-label { font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 2px; }
+  .metric-value { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .metric-value.highlight { color: var(--gulf-deep); }
+
+  .psf-bar { margin: 16px 0; padding: 12px 14px; background: var(--sand-light); border-radius: 3px; border-left: 3px solid var(--gulf-light); }
+  .psf-bar.best { border-left-color: var(--palm); }
+  .psf-bar.high { border-left-color: var(--sand-dark); }
+  .psf-label { font-size: 10px; color: var(--ink-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .psf-value { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--ink); }
+  .psf-note { font-size: 10px; color: var(--ink-light); margin-top: 2px; }
+
+  .sub-section { border-top: 1px solid var(--border); padding-top: 14px; margin-top: 12px; }
+  .sub-title { font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+  .int-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 7px; font-size: 11px; }
+  .int-key { color: var(--ink-light); flex-shrink: 0; }
+  .int-val { color: var(--ink); font-weight: 400; text-align: right; }
+  .int-val.pos { color: var(--palm); }
+  .int-val.neg { color: #8B6914; }
+  .int-val.neutral { color: var(--ink-mid); }
+
+  .amenity-sub-title { font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gulf-deep); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .amenity-sub-title::after { content: ''; flex: 1; height: 1px; background: var(--gulf-pale); }
+  .amenity-item { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .amenity-name { font-size: 11px; color: var(--ink-mid); }
+  .amenity-dist { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+  .amenity-dist.close { background: #E1F0E8; color: #3A6B42; }
+  .amenity-dist.mid { background: var(--gulf-pale); color: var(--gulf-deep); }
+  .amenity-dist.far { background: #EDE8E3; color: #6B5A48; }
+
+  .score-row { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .score-label { font-size: 10px; color: var(--ink-light); letter-spacing: 0.08em; text-transform: uppercase; flex-shrink: 0; }
+  .score-track { flex: 1; height: 3px; background: var(--sand-dark); border-radius: 2px; }
+  .score-fill { height: 100%; border-radius: 2px; background: var(--gulf); }
+  .score-num { font-size: 12px; font-weight: 500; color: var(--ink-mid); flex-shrink: 0; }
+
+  .chart-container { background: var(--white); border: 1px solid var(--border); border-radius: 4px; padding: 32px 40px; }
+  .chart-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--ink); margin-bottom: 6px; }
+  .chart-sub { font-size: 12px; color: var(--ink-light); font-weight: 300; margin-bottom: 32px; }
+  .bar-chart { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { display: flex; align-items: center; gap: 14px; }
+  .bar-addr { font-size: 12px; color: var(--ink-mid); width: 160px; flex-shrink: 0; line-height: 1.3; }
+  .bar-addr small { font-size: 10px; color: var(--ink-light); display: block; }
+  .bar-track { flex: 1; height: 28px; background: var(--sand-light); border-radius: 2px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 2px; position: relative; }
+  .bar-fill.best { background: #4A6741; } .bar-fill.mid { background: var(--gulf); } .bar-fill.high { background: var(--sand-dark); }
+  .bar-val { position: absolute; right: -58px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 500; color: var(--ink-mid); white-space: nowrap; }
+  .chart-legend { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--ink-light); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+  .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .sum-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; padding: 20px; animation: fadeUp 0.4s ease forwards; opacity: 0; }
+  .sum-card:nth-child(1){animation-delay:0.05s} .sum-card:nth-child(2){animation-delay:0.1s} .sum-card:nth-child(3){animation-delay:0.15s} .sum-card:nth-child(4){animation-delay:0.2s}
+  .sum-card-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; }
+  .sum-card-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--gulf-deep); line-height: 1; margin-bottom: 4px; }
+  .sum-card-sub { font-size: 10px; color: var(--ink-light); }
+
+  .considerations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 16px; }
+  .consider-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; padding: 24px; animation: fadeUp 0.4s ease forwards; opacity: 0; }
+  .consider-card:nth-child(1){animation-delay:0.05s} .consider-card:nth-child(2){animation-delay:0.1s} .consider-card:nth-child(3){animation-delay:0.15s} .consider-card:nth-child(4){animation-delay:0.2s} .consider-card:nth-child(5){animation-delay:0.25s} .consider-card:nth-child(6){animation-delay:0.3s} .consider-card:nth-child(7){animation-delay:0.35s}
+  .consider-q { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 500; font-style: italic; color: var(--gulf-deep); margin-bottom: 12px; line-height: 1.4; }
+  .consider-a { font-size: 13px; font-weight: 300; color: var(--ink-mid); line-height: 1.75; }
+
+  footer { background: var(--ink); padding: 60px; margin-top: 80px; }
+  .footer-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 60px; align-items: start; }
+  .footer-brand h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--white); line-height: 1.2; margin-bottom: 8px; }
+  .footer-brand h2 em { font-style: italic; color: var(--gulf-light); }
+  .footer-brand p { font-size: 12px; color: rgba(253,250,247,0.4); font-weight: 300; }
+  .footer-contact h3, .footer-note h3 { font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gulf-light); margin-bottom: 20px; }
+  .contact-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+  .contact-icon { width: 32px; height: 32px; border: 1px solid rgba(74,124,142,0.35); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-icon svg { width: 14px; height: 14px; stroke: var(--gulf-light); fill: none; stroke-width: 1.5; }
+  .contact-label { font-size: 9px; color: rgba(253,250,247,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+  .contact-value { font-size: 14px; color: var(--white); font-weight: 300; }
+  .contact-value a { color: var(--white); text-decoration: none; }
+  .contact-value a:hover { color: var(--gulf-light); }
+  .footer-note p { font-size: 12px; color: rgba(253,250,247,0.35); font-weight: 300; line-height: 1.7; }
+  .footer-bottom { max-width: 1400px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: rgba(253,250,247,0.25); letter-spacing: 0.06em; flex-wrap: wrap; gap: 8px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .prop-card { animation: fadeUp 0.4s ease forwards; opacity: 0; }
+  .prop-card:nth-child(1){animation-delay:0.05s} .prop-card:nth-child(2){animation-delay:0.1s} .prop-card:nth-child(3){animation-delay:0.15s} .prop-card:nth-child(4){animation-delay:0.2s} .prop-card:nth-child(5){animation-delay:0.25s}
+
+  @media (max-width:900px) {
+    .header-content { padding: 40px 24px 36px; }
+    nav { padding: 0 24px; }
+    main { padding: 0 24px 60px; }
+    footer { padding: 40px 24px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .summary-cards { grid-template-columns: 1fr 1fr; }
+    .considerations-grid { grid-template-columns: 1fr; }
+    .bar-addr { width: 110px; }
+    .header-stats { gap: 24px; }
+    .section-intro p { text-align: left; }
+  }
+  @media (max-width:600px) {
+    .nav-tab { padding: 0 10px; font-size: 10px; }
+    .nav-realtor { display: none; }
+    .summary-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-bg"></div>
+  <div class="wave-pattern"></div>
+  <div class="header-content">
+    <div class="realtor-badge">Presented by Marsha Warnike · Naples, FL</div>
+    <h1>Naples Waterfront<br><em>Property Analysis</em></h1>
+    <p class="subtitle">Seven Gulf-Access Listings — Conners / Vanderbilt Beach &amp; Royal Harbor</p>
+    <div class="header-stats">
+      <div class="hstat"><div class="hstat-val">$5.99M–$8.89M</div><div class="hstat-label">Price range</div></div>
+      <div class="hstat"><div class="hstat-val">$1,096</div><div class="hstat-label">Lowest $/sq ft</div></div>
+      <div class="hstat"><div class="hstat-val">$1,942</div><div class="hstat-label">Highest $/sq ft</div></div>
+      <div class="hstat"><div class="hstat-val">7</div><div class="hstat-label">Listings compared</div></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('properties',this)">Properties</button>
+    <button class="nav-tab" onclick="showSection('analysis',this)">Value Analysis</button>
+    <button class="nav-tab" onclick="showSection('considerations',this)">Buyer Considerations</button>
+    <button class="nav-tab" onclick="showSection('contact',this)">Contact</button>
+  </div>
+  <div class="nav-realtor">Your agent: <strong>Marsha Warnike</strong></div>
+</nav>
+
+<main>
+
+<!-- ══ PROPERTIES ══ -->
+<section id="properties" class="active">
+  <div class="section-intro">
+    <h2>Seven <span>Gulf-Access</span> Properties</h2>
+    <p>Each profile includes key nearby amenities with approximate distances to help you understand the daily rhythms of life in each location.</p>
+  </div>
+
+  <div class="neighborhood-divider" style="margin-top:0;">
+    <h3>Conners / Vanderbilt Beach · 34108 · North Naples</h3>
+  </div>
+
+  <div class="prop-grid">
+
+    <!-- 360 HERON AVE -->
+    <div class="prop-card top-pick">
+      <div class="card-header">
+        <span class="card-badge badge-top">Top Value Pick</span>
+        <div class="top-pick-ribbon">Best $/sf</div>
+        <div class="card-address">360 Heron Ave</div>
+        <div class="card-neighborhood">Conners · Gulf access · south-facing · 2021</div>
+        <div class="card-price">$6,495,000</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">5,928</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">4 bd + den / 7 ba</div></div>
+          <div class="metric"><div class="metric-label">Year Built</div><div class="metric-value">2021</div></div>
+          <div class="metric"><div class="metric-label">Levels</div><div class="metric-value">3 + elevator</div></div>
+        </div>
+        <div class="psf-bar best">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">$1,096</div>
+          <div class="psf-note">Lowest of all 7 listings — largest living area</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val pos">South-facing — confirmed</span></div>
+          <div class="int-item"><span class="int-key">Furnished / move-in</span><span class="int-val pos">Fully furnished by Design West</span></div>
+          <div class="int-item"><span class="int-key">Generator</span><span class="int-val pos">Whole-house included</span></div>
+          <div class="int-item"><span class="int-key">Boat lift</span><span class="int-val pos">13,000 lb + jet ski lift</span></div>
+          <div class="int-item"><span class="int-key">Hurricane protection</span><span class="int-val pos">Full impact windows / doors / screens</span></div>
+          <div class="int-item"><span class="int-key">Days on market</span><span class="int-val neg">381 days — negotiating leverage</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Vanderbilt Beach (public)</span><span class="amenity-dist close">~0.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛍 Mercato — dining, shops, cinema</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏨 Ritz-Carlton Beach Resort</span><span class="amenity-dist close">~0.6 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 The Turtle Club / Hampton Social</span><span class="amenity-dist close">~0.7 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🌿 Delnor-Wiggins Pass State Park</span><span class="amenity-dist close">~1.2 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛒 Publix Vanderbilt Beach Rd</span><span class="amenity-dist close">~1.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">⛳ Tiburón Golf Club (Ritz)</span><span class="amenity-dist mid">~3.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🎭 Artis–Naples / Philharmonic</span><span class="amenity-dist mid">~3.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏥 NCH North Collier Hospital</span><span class="amenity-dist mid">~4.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">✈ Naples Airport (NAP)</span><span class="amenity-dist mid">~5.0 mi</span></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Criteria alignment</span>
+          <div class="score-track"><div class="score-fill" style="width:91%"></div></div>
+          <span class="score-num">91/100</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 432 BAYSIDE AVE -->
+    <div class="prop-card">
+      <div class="card-header">
+        <span class="card-badge badge-recent">Modern Build · Resale</span>
+        <div class="card-address">432 Bayside Ave</div>
+        <div class="card-neighborhood">Conners · Canal / Gulf access</div>
+        <div class="card-price">$5,999,999</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">4,293</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">4 bd / 4.5 ba</div></div>
+          <div class="metric"><div class="metric-label">Notable</div><div class="metric-value">Gulfshore Life featured</div></div>
+          <div class="metric"><div class="metric-label">Style</div><div class="metric-value">Modern waterfront</div></div>
+        </div>
+        <div class="psf-bar">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">$1,398</div>
+          <div class="psf-note">Strong value — lowest list price in group</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val neutral">Confirm direction with agent</span></div>
+          <div class="int-item"><span class="int-key">Architecture</span><span class="int-val pos">Magazine-featured modern design</span></div>
+          <div class="int-item"><span class="int-key">Hurricane protection</span><span class="int-val pos">Modern build — impact glass</span></div>
+          <div class="int-item"><span class="int-key">Entry price</span><span class="int-val pos">Lowest asking price in Conners group</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Vanderbilt Beach (public)</span><span class="amenity-dist close">~0.7 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛍 Mercato — dining, shops, cinema</span><span class="amenity-dist close">~0.9 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏨 Ritz-Carlton Beach Resort</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 Hampton Social / Bayside Seafood Grill</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🌿 Delnor-Wiggins Pass State Park</span><span class="amenity-dist close">~1.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛒 Publix Vanderbilt Beach Rd</span><span class="amenity-dist close">~1.1 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">⛳ Tiburón Golf Club (Ritz)</span><span class="amenity-dist mid">~3.2 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🎭 Artis–Naples / Philharmonic</span><span class="amenity-dist mid">~4.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏥 NCH North Collier Hospital</span><span class="amenity-dist mid">~4.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">✈ Naples Airport (NAP)</span><span class="amenity-dist mid">~5.2 mi</span></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Criteria alignment</span>
+          <div class="score-track"><div class="score-fill" style="width:74%"></div></div>
+          <span class="score-num">74/100</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 175 CONNERS AVE -->
+    <div class="prop-card">
+      <div class="card-header">
+        <span class="card-badge badge-resale">2017 Build · Resale</span>
+        <div class="card-address">175 Conners Ave</div>
+        <div class="card-neighborhood">Conners / Vanderbilt Beach · Gulf access</div>
+        <div class="card-price">$5,995,000</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">5,056</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">4 bd / 4+2 ba</div></div>
+          <div class="metric"><div class="metric-label">Garage</div><div class="metric-value">8-car (incl. underground)</div></div>
+          <div class="metric"><div class="metric-label">Style</div><div class="metric-value">Contemporary multi-level</div></div>
+        </div>
+        <div class="psf-bar">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">$1,186</div>
+          <div class="psf-note">Good value — originally listed at $7.5M</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val neutral">Confirm direction with agent</span></div>
+          <div class="int-item"><span class="int-key">Furnished / move-in</span><span class="int-val pos">Fully furnished — turnkey</span></div>
+          <div class="int-item"><span class="int-key">Windows / doors</span><span class="int-val pos">Impact-resistant Pella throughout</span></div>
+          <div class="int-item"><span class="int-key">Price signal</span><span class="int-val neg">Relisted — down $1.5M from original ask</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Vanderbilt Beach (public)</span><span class="amenity-dist close">~0.4 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛍 Mercato — dining, shops, cinema</span><span class="amenity-dist close">~0.7 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏨 Ritz-Carlton Beach Resort</span><span class="amenity-dist close">~0.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 The Turtle Club / Bayside Seafood</span><span class="amenity-dist close">~0.6 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🌿 Delnor-Wiggins Pass State Park</span><span class="amenity-dist close">~1.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛒 Publix Vanderbilt Beach Rd</span><span class="amenity-dist close">~0.9 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">⛳ Tiburón Golf Club (Ritz)</span><span class="amenity-dist mid">~2.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🎭 Artis–Naples / Philharmonic</span><span class="amenity-dist mid">~3.6 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏥 NCH North Collier Hospital</span><span class="amenity-dist mid">~4.2 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">✈ Naples Airport (NAP)</span><span class="amenity-dist mid">~5.0 mi</span></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Criteria alignment</span>
+          <div class="score-track"><div class="score-fill" style="width:72%"></div></div>
+          <span class="score-num">72/100</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 256 TRADEWINDS AVE -->
+    <div class="prop-card">
+      <div class="card-header">
+        <span class="card-badge badge-new">Built 2025 · Never Lived In</span>
+        <div class="card-address">256 Tradewinds Ave</div>
+        <div class="card-neighborhood">Conners · Gulf access · south-facing · cul-de-sac</div>
+        <div class="card-price">$7,695,000</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">4,751</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">4 bd + den / 4.5 ba</div></div>
+          <div class="metric"><div class="metric-label">Water Frontage</div><div class="metric-value">80 ft · new seawall</div></div>
+          <div class="metric"><div class="metric-label">Kitchen</div><div class="metric-value">Wolf / Sub-Zero</div></div>
+        </div>
+        <div class="psf-bar">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">$1,620</div>
+          <div class="psf-note">New-build premium — zero deferred maintenance</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val pos">South-facing — confirmed</span></div>
+          <div class="int-item"><span class="int-key">Seawall</span><span class="int-val pos">Brand new — no near-term replacement cost</span></div>
+          <div class="int-item"><span class="int-key">Street type</span><span class="int-val pos">Cul-de-sac — low traffic, more private</span></div>
+          <div class="int-item"><span class="int-key">Hurricane protection</span><span class="int-val pos">2025 building code — full impact</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Vanderbilt Beach (public)</span><span class="amenity-dist close">~0.6 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛍 Mercato — dining, shops, cinema</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏨 Ritz-Carlton Beach Resort</span><span class="amenity-dist close">~0.7 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 Hampton Social / The Turtle Club</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🌿 Delnor-Wiggins Pass State Park</span><span class="amenity-dist close">~1.3 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛒 Publix Vanderbilt Beach Rd</span><span class="amenity-dist close">~1.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">⛳ Tiburón Golf Club (Ritz)</span><span class="amenity-dist mid">~3.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🎭 Artis–Naples / Philharmonic</span><span class="amenity-dist mid">~3.9 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏥 NCH North Collier Hospital</span><span class="amenity-dist mid">~4.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">✈ Naples Airport (NAP)</span><span class="amenity-dist mid">~5.0 mi</span></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Criteria alignment</span>
+          <div class="score-track"><div class="score-fill" style="width:78%"></div></div>
+          <span class="score-num">78/100</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 418 SEABEE AVE -->
+    <div class="prop-card">
+      <div class="card-header">
+        <span class="card-badge badge-new">New Construction · To-Build</span>
+        <div class="card-address">418 Seabee Ave</div>
+        <div class="card-neighborhood">Conners · Gulf access · south-facing</div>
+        <div class="card-price">$6,975,000</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">4,450–5,665</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">4 bd + den / 4.5 ba</div></div>
+          <div class="metric"><div class="metric-label">Garage</div><div class="metric-value">3-car + elevator</div></div>
+          <div class="metric"><div class="metric-label">Financing</div><div class="metric-value highlight">Owner carry — 20% down</div></div>
+        </div>
+        <div class="psf-bar">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">~$1,232–$1,567</div>
+          <div class="psf-note">Range depends on final configuration</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val pos">South-facing — confirmed</span></div>
+          <div class="int-item"><span class="int-key">Customization</span><span class="int-val pos">Concierge build — your specifications</span></div>
+          <div class="int-item"><span class="int-key">Owner financing</span><span class="int-val pos">Rare — 20% down available</span></div>
+          <div class="int-item"><span class="int-key">Timeline</span><span class="int-val neg">Under construction — not immediate</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Vanderbilt Beach (public)</span><span class="amenity-dist close">~0.5 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛍 Mercato — dining, shops, cinema</span><span class="amenity-dist close">~0.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏨 Ritz-Carlton Beach Resort</span><span class="amenity-dist close">~0.6 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 The Club at Vanderbilt Beach</span><span class="amenity-dist close">~0.7 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🌿 Delnor-Wiggins Pass State Park</span><span class="amenity-dist close">~1.2 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🛒 Publix Vanderbilt Beach Rd</span><span class="amenity-dist close">~1.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">⛳ Tiburón Golf Club (Ritz)</span><span class="amenity-dist mid">~3.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🎭 Artis–Naples / Philharmonic</span><span class="amenity-dist mid">~3.8 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏥 NCH North Collier Hospital</span><span class="amenity-dist mid">~4.4 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">✈ Naples Airport (NAP)</span><span class="amenity-dist mid">~5.0 mi</span></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">Criteria alignment</span>
+          <div class="score-track"><div class="score-fill" style="width:68%"></div></div>
+          <span class="score-num">68/100</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Conners grid -->
+
+  <div class="neighborhood-divider">
+    <h3>Royal Harbor · 34102 · South Naples · 1 Mile to 5th Avenue South</h3>
+  </div>
+
+  <div class="prop-grid">
+
+    <!-- 1100 SANDPIPER ST -->
+    <div class="prop-card">
+      <div class="card-header">
+        <span class="card-badge badge-new">Built 2024/25 · 2025 Sand Dollar Award</span>
+        <div class="card-address">1100 Sandpiper St</div>
+        <div class="card-neighborhood">Royal Harbor · Oyster Bay · corner lot</div>
+        <div class="card-price">$6,990,000</div>
+      </div>
+      <div class="card-body">
+        <div class="metrics-grid">
+          <div class="metric"><div class="metric-label">Living Sq Ft</div><div class="metric-value">3,600</div></div>
+          <div class="metric"><div class="metric-label">Beds / Baths</div><div class="metric-value">5 bd / 5+2 ba</div></div>
+          <div class="metric"><div class="metric-label">Water Frontage</div><div class="metric-value">~200 ft Oyster Bay</div></div>
+          <div class="metric"><div class="metric-label">Dock</div><div class="metric-value">60-ft dock in place</div></div>
+        </div>
+        <div class="psf-bar high">
+          <div class="psf-label">Price per sq ft</div>
+          <div class="psf-value">$1,942</div>
+          <div class="psf-note">Highest of group — down 20.6% from original ask</div>
+        </div>
+        <div class="sub-section">
+          <div class="sub-title">Property highlights</div>
+          <div class="int-item"><span class="int-key">☀ Backyard exposure</span><span class="int-val neutral">West-facing — stunning sunsets, shaded mornings</span></div>
+          <div class="int-item"><span class="int-key">Architecture</span><span class="int-val pos">Stoff Cooney design · 8 fireplaces · marble</span></div>
+          <div class="int-item"><span class="int-key">Pool</span><span class="int-val pos">Infinity saltwater spa</span></div>
+          <div class="int-item"><span class="int-key">Price signal</span><span class="int-val neg">Highest $/sf — down 20.6% from list</span></div>
+        </div>
+        <div class="sub-section">
+          <div class="amenity-sub-title">Nearby — what life looks like here</div>
+          <div class="amenity-item"><span class="amenity-name">🍽 5th Avenue South — fine dining &amp; shops</span><span class="amenity-dist close">~1.0 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🍽 3rd Street South boutiques &amp; cafés</span><span class="amenity-dist close">~1.4 mi</span></div>
+          <div class="amenity-item"><span class="amenity-name">🏖 Naples Pier &
